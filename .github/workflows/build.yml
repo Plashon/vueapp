@@ -1,15 +1,15 @@
-name: 'build docker image'
+name: 'build and deploy docker image'
 
 on:
   push:
     tags:
-      - '*'  # Trigger บนทุก tag ที่ push
+      - '*'  # Trigger เมื่อ push tag ใด ๆ
 
 jobs:
   release-docker-image-job:
     runs-on: ubuntu-latest
     steps:
-      - name: build docker image
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Login to GitHub Container Registry
@@ -24,7 +24,7 @@ jobs:
       - name: Build and push Docker image
         uses: mr-smithers-excellent/docker-build-push@v6
         with:
-          image: vueapp  
+          image: vue-app  # ไม่ต้องใส่ naruapon ซ้ำ
           registry: ghcr.io/Plashon
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
